@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicky Licky</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffcc33, #ff6600);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #ff6600;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #cc5200;
+            border-bottom: 2px solid #ff6600;
+        }
+
+        .navbar .search-bar {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin: 0 20px;
+        }
+
+        .navbar input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .navbar input[type="text"]:focus {
+            border-color: #ff6600;
+        }
+
+        .header {
+            background-color: rgba(255, 102, 0, 0.9);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+            position: relative;
+        }
+
+        .header img {
+            width: 120px;
+            margin-top: 20px;
+        }
+
+        .promo {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #ff6600;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .promo h1, .promo p {
+            margin: 10px 0;
+        }
+
+        .promo-slider {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .promo-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .promo-slider img:hover {
+            transform: scale(1.05);
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .active-slide {
+            display: block;
+        }
+
+        .menu-section {
+            margin: 30px 0;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            max-width: 1000px;
+            margin: 30px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        .menu-section h2 {
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+
+        .menu-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .menu-items div {
+            background-color: #fff;
+            border: 2px solid #ff6600;
+            border-radius: 20px;
+            margin: 10px;
+            padding: 20px;
+            max-width: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .menu-items div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-items img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .details-section {
+            display: none;
+            margin: 30px 0;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            max-width: 1000px;
+            margin: 30px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .details-section.active {
+            display: block;
+        }
+
+        .details-section h2 {
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+
+        .details-section .items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .details-section .items div {
+            background-color: #fff;
+            border: 2px solid #ff6600;
+            border-radius: 20px;
+            margin: 10px;
+            padding: 20px;
+            max-width: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .details-section .items div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .details-section .items img {
+            width: 100%;
+            border-radius: 20px;
+        }
+
+        .co-so-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 800px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .co-so-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .co-so-section li {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .co-so-section li:hover {
+            background-color: #cc5200;
+        }
+
+        #map {
+            margin-top: 20px;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 450px;
+        }
+
+        .order-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        .order-items {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .order-items div {
+            margin: 15px 0;
+        }
+
+        .order-items select {
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .order-items select:focus {
+            border-color: #ff6600;
+        }
+
+        .order-items button {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .order-items button:hover {
+            background-color: #cc5200;
+        }
+
+        .login-form, .register-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .login-form h2, .register-form h2 {
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+
+        .login-form input, .register-form input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .login-form input:focus, .register-form input:focus {
+            border-color: #ff6600;
+        }
+
+        .login-form button, .register-form button {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-form button:hover, .register-form button:hover {
+            background-color: #cc5200;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer div {
+            max-width: 1000px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer div section {
+            flex: 1;
+            margin: 10px;
+        }
+
+        .footer h3 {
+            border-bottom: 1px solid #fff;
+            padding-bottom: 10px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer section p:hover {
+            color: #ff6600;
+        }
+
+        /* Add animations and transitions */
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .zoom-in {
+            animation: zoomIn 1s ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+    <script>
+        let slideIndex = 0;
+
+        function showSlides() {
+            const slides = document.getElementsByClassName('slide');
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = 'none';
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].style.display = 'block';
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+
+        function loadPage(page) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.style.display = 'none');
+            document.getElementById(page).style.display = 'block';
+            document.getElementById(page).classList.add('fade-in');
+        }
+
+        function loadMap(address) {
+            var mapFrame = document.createElement('iframe');
+            mapFrame.width = "100%";
+            mapFrame.height = "450";
+            mapFrame.style.border = "0";
+            mapFrame.src = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodeURIComponent(address)}`;
+            document.getElementById('map').innerHTML = '';
+            document.getElementById('map').appendChild(mapFrame);
+        }
+
+        function showMenuDetails(category) {
+            const details = document.querySelectorAll('.details-section');
+            details.forEach(detail => detail.classList.remove('active'));
+            document.getElementById(category).classList.add('active');
+        }
+
+        function searchMenu() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('.details-section .items div');
+            items.forEach(item => {
+                const itemName = item.querySelector('h3').innerText.toLowerCase();
+                if (itemName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        window.onload = function() {
+            loadPage('home');
+            showSlides();
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" onclick="loadPage('home')">Home</a>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search món ăn..." oninput="searchMenu()">
+        </div>
+        <a href="#" onclick="loadPage('menu')">Menu</a>
+        <a href="#" onclick="loadPage('co-so')">Cơ sở</a>
+        <a href="#" onclick="loadPage('order')">Order</a>
+        <a href="#" onclick="loadPage('login')">Login</a>
+    </div>
+    <div id="home" class="page">
+        <div class="header zoom-in">
+            <img src="img/logo.jpg" alt="Chicky Licky Logo">
+        </div>
+        <div class="promo fade-in">
+            <h1>GIA NHẬP “TRẠI GÀ”</h1>
+            <p>Nhận ưu đãi độc quyền!</p>
+            <p>Tích điểm từ 20.05.2024</p>
+            <div class="promo-slider">
+                <div class="slide active-slide">
+                    <img src="img/promo.png" alt="Promo Image 1">
+                </div>
+                <div class="slide">
+                    <img src="img/promo 2.jpg" alt="Promo Image 2">
+                </div>
+                <div class="slide">
+                    <img src="img/promo.png" alt="Promo Image 3">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu" class="page" style="display: none;">
+        <div class="menu-section slide-in">
+            <h2>DANH MỤC MÓN ĂN</h2>
+            <div class="menu-items">
+                <div onclick="showMenuDetails('chicken')">
+                    <h3>Gà rán</h3>
+                    <img src="img/duiga.jpg" alt="Gà rán">
+                    <p>Gà rán giòn tan</p>
+                </div>
+                <div onclick="showMenuDetails('pop')">
+                    <h3>Gà pop</h3>
+                    <img src="img/bestsaller1.jpg" alt="Gà pop">
+                    <p>Gà pop nhỏ xinh</p>
+                </div>
+                <div onclick="showMenuDetails('tok')">
+                    <h3>Gà tok</h3>
+                    <img src="img/bestsaller2.jpg" alt="Gà tok">
+                    <p>Gà tok thơm ngon</p>
+                </div>
+                <div onclick="showMenuDetails('bestseller')">
+                    <h3>Best seller</h3>
+                    <img src="img/bestsaller1.jpg" alt="Best seller">
+                    <p>Các món best seller</p>
+                </div>
+                <div onclick="showMenuDetails('combo')">
+                    <h3>Combo</h3>
+                    <img src="img/combo-phe.jpg" alt="Combo">
+                    <p>Các combo hấp dẫn</p>
+                </div>
+                <div onclick="showMenuDetails('drinks')">
+                    <h3>Đồ uống</h3>
+                    <img src="img/trasua.jpg" alt="Đồ uống">
+                    <p>Các loại đồ uống</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="chicken" class="details-section">
+        <h2>Gà rán</h2>
+        <div class="items">
+            <div>
+                <h3>Gà rán</h3>
+                <img src="img/duiga.jpg" alt="Gà rán">
+                <p>Gà rán giòn tan</p>
+            </div>
+            <div>
+                <h3>Gà rán + 5 loại sốt</h3>
+                <img src="img/listsot.jpg" alt="List Sauces">
+                <p>Gà rán kèm 5 loại sốt đặc biệt</p>
+            </div>
+        </div>
+    </div>
+    <div id="pop" class="details-section">
+        <h2>Gà pop</h2>
+        <div class="items">
+            <div>
+                <h3>Gà pop size M</h3>
+                <img src="img/bestsaller1.jpg" alt="Gà pop size M">
+                <p>Gà pop nhỏ xinh</p>
+            </div>
+            <div>
+                <h3>Gà pop size L</h3>
+                <img src="img/bestsaller1.jpg" alt="Gà pop size L">
+                <p>Gà pop lớn</p>
+            </div>
+        </div>
+    </div>
+    <div id="tok" class="details-section">
+        <h2>Gà tok</h2>
+        <div class="items">
+            <div>
+                <h3>Gà tok size M</h3>
+                <img src="img/bestsaller2.jpg" alt="Gà tok size M">
+                <p>Gà tok nhỏ xinh</p>
+            </div>
+            <div>
+                <h3>Gà tok size L</h3>
+                <img src="img/bestsaller2.jpg" alt="Gà tok size L">
+                <p>Gà tok lớn</p>
+            </div>
+        </div>
+    </div>
+    <div id="bestseller" class="details-section">
+        <h2>Best seller</h2>
+        <div class="items">
+            <div>
+                <h3>Best seller 1</h3>
+                <img src="img/bestsaller1.jpg" alt="Best seller 1">
+                <p>Món best seller 1</p>
+            </div>
+            <div>
+                <h3>Best seller 2</h3>
+                <img src="img/bestsaller2.jpg" alt="Best seller 2">
+                <p>Món best seller 2</p>
+            </div>
+            <div>
+                <h3>Combo best seller 1</h3>
+                <img src="img/combo-deme.jpg" alt="Combo best seller 1">
+                <p>Combo best seller 1</p>
+            </div>
+            <div>
+                <h3>Combo best seller 2</h3>
+                <img src="img/combo-none.jpg" alt="Combo best seller 2">
+                <p>Combo best seller 2</p>
+            </div>
+        </div>
+    </div>
+    <div id="combo" class="details-section">
+        <h2>Combo</h2>
+        <div class="items">
+            <div>
+                <h3>Combo 1</h3>
+                <img src="img/combo-deme.jpg" alt="Combo 1">
+                <p>Combo gà rán và nước uống</p>
+            </div>
+            <div>
+                <h3>Combo 2</h3>
+                <img src="img/combo-none.jpg" alt="Combo 2">
+                <p>Combo gà rán và nước uống</p>
+            </div>
+            <div>
+                <h3>Combo 3</h3>
+                <img src="img/combo-phe.jpg" alt="Combo 3">
+                <p>Combo gà rán và nước uống</p>
+            </div>
+            <div>
+                <h3>Combo 4</h3>
+                <img src="img/combo_hahe.jpg" alt="Combo 4">
+                <p>Combo gà rán và nước uống</p>
+            </div>
+        </div>
+    </div>
+    <div id="drinks" class="details-section">
+        <h2>Đồ uống</h2>
+        <div class="items">
+            <div>
+                <h3>Trà sữa</h3>
+                <img src="img/trasua.jpg" alt="Trà sữa">
+                <p>Trà sữa thơm ngon</p>
+            </div>
+            <div>
+                <h3>Trà tắc</h3>
+                <img src="img/trachanh.jpg" alt="Trà tắc">
+                <p>Trà tắc mát lạnh</p>
+            </div>
+            <div>
+                <h3>Pepsi</h3>
+                <img src="img/pessi.jpg" alt="Pepsi">
+                <p>Nước ngọt Pepsi</p>
+            </div>
+        </div>
+    </div>
+    <div id="co-so" class="page" style="display: none;">
+        <div class="co-so-section fade-in">
+            <h2>Danh sách cơ sở</h2>
+            <ul>
+                <li onclick="loadMap('167 Hà Huy Tập, Thanh Khê, Đà Nẵng')">167 Hà Huy Tập, Thanh Khê, Đà Nẵng</li>
+                <li onclick="loadMap('242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng')">242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng</li>
+                <li onclick="loadMap('78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng')">78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng</li>
+                <li onclick="loadMap('34 Phan Đăng Lưu, Hải Châu, Đà Nẵng')">34 Phan Đăng Lưu, Hải Châu, Đà Nẵng</li>
+            </ul>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div id="order" class="page" style="display: none;">
+        <div class="order-section fade-in">
+            <h2>Order</h2>
+            <div class="order-items">
+                <div>
+                    <h3>Chọn loại gà</h3>
+                    <select id="chicken-type">
+                        <option value="ga-ran">Gà rán</option>
+                        <option value="ga-tok">Gà tok</option>
+                        <option value="ga-pop-M">Gà pop size M</option>
+                        <option value="ga-pop-L">Gà pop size L</option>
+                    </select>
+                </div>
+                <div>
+                    <h3>Chọn sốt</h3>
+                    <select id="sauce-type">
+                        <option value="sot-dac-biet-1">Sốt đặc biệt 1</option>
+                        <option value="sot-dac-biet-2">Sốt đặc biệt 2</option>
+                        <option value="sot-dac-biet-3">Sốt đặc biệt 3</option>
+                        <option value="sot-dac-biet-4">Sốt đặc biệt 4</option>
+                        <option value="sot-dac-biet-5">Sốt đặc biệt 5</option>
+                    </select>
+                </div>
+                <button onclick="placeOrder()">Đặt hàng</button>
+            </div>
+        </div>
+        <script>
+            function placeOrder() {
+                const chickenType = document.getElementById('chicken-type').value;
+                const sauceType = document.getElementById('sauce-type').value;
+                alert(`Bạn đã đặt: ${chickenType} với ${sauceType}`);
+            }
+        </script>
+    </div>
+    <div id="login" class="page" style="display: none;">
+        <div class="login-form zoom-in">
+            <h2>Đăng nhập</h2>
+            <form action="login.jsp" method="post">
+                <input type="text" name="username" placeholder="Tên đăng nhập" required>
+                <input type="password" name="password" placeholder="Mật khẩu" required>
+                <button type="submit">Đăng nhập</button>
+            </form>
+            <p>Chưa có tài khoản? <a href="#" onclick="loadPage('register')">Đăng ký</a></p>
+        </div>
+    </div>
+    <div id="register" class="page" style="display: none;">
+        <div class="register-form zoom-in">
+            <h2>Đăng ký</h2>
+            <form action="register.php" method="post">
+                <input type="text" name="username" placeholder="Tên đăng nhập" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Mật khẩu" required>
+                <input type="password" name="confirm_password" placeholder="Xác nhận mật khẩu" required>
+                <button type="submit">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div>
+            <section>
+                <h3>MÓN ĂN</h3>
+                <p>Menu</p>
+                <p>Ưu đãi</p>
+                <p>Combo</p>
+                <p>Best seller</p>
+            </section>
+            <section>
+                <h3>VỀ CHICKY LICKY</h3>
+                <p>Câu chuyện của chúng tôi</p>
+                <p>Tin Ưu đãi</p>
+                <p>Tuyển dụng</p>
+            </section>
+            <section>
+                <h3>CƠ SỞ</h3>
+                <p>167 Hà Huy Tập, Thanh Khê, Đà Nẵng</p>
+                <p>242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng</p>
+                <p>78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng</p>
+                <p>34 Phan Đăng Lưu, Hải Châu, Đà Nẵng</p>
+            </section>
+            <section>
+                <h3>TALK TO US</h3>
+                <p>(04) 298 3985 2092</p>
+                <p>+76 209 1092 4095</p>
+                <p>info@mollysrestaurant.com</p>
+            </section>
+        </div>
+        <p>Copyright © 2024 Chicky Licky</p>
+    </div>
+</body>
+</html>
