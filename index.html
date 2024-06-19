@@ -242,7 +242,12 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+
         }
+        #co-so a {
+        text-decoration: none;
+        color: inherit;
+    }
 
         .co-so-section li:hover {
             background-color: #cc5200;
@@ -515,18 +520,18 @@
             <h2>DANH MỤC MÓN ĂN</h2>
             <div class="menu-items">
                 <div onclick="showMenuDetails('chicken')">
-                    <h3>Gà rán</h3>
+                    <h3>Đùi gà</h3>
                     <img src="img/duiga.jpg" alt="Gà rán">
-                    <p>Gà rán giòn tan</p>
+                    <p>Gà đùi giòn tan</p>
                 </div>
                 <div onclick="showMenuDetails('pop')">
                     <h3>Gà pop</h3>
-                    <img src="img/bestsaller1.jpg" alt="Gà pop">
+                    <img src="img/bestsaller2.jpg" alt="Gà pop">
                     <p>Gà pop nhỏ xinh</p>
                 </div>
                 <div onclick="showMenuDetails('tok')">
                     <h3>Gà tok</h3>
-                    <img src="img/bestsaller2.jpg" alt="Gà tok">
+                    <img src="img/bestsaller1.jpg" alt="Gà tok">
                     <p>Gà tok thơm ngon</p>
                 </div>
                 <div onclick="showMenuDetails('bestseller')">
@@ -666,10 +671,10 @@
         <div class="co-so-section fade-in">
             <h2>Danh sách cơ sở</h2>
             <ul>
-                <li onclick="loadMap('167 Hà Huy Tập, Thanh Khê, Đà Nẵng')">167 Hà Huy Tập, Thanh Khê, Đà Nẵng</li>
-                <li onclick="loadMap('242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng')">242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng</li>
-                <li onclick="loadMap('78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng')">78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng</li>
-                <li onclick="loadMap('34 Phan Đăng Lưu, Hải Châu, Đà Nẵng')">34 Phan Đăng Lưu, Hải Châu, Đà Nẵng</li>
+                <li><a href="https://maps.app.goo.gl/LHXi3bLoBWbdDQSv8" target="_blank">167 Hà Huy Tập, Thanh Khê, Đà Nẵng</a></li>
+                <li><a href="https://maps.app.goo.gl/qWs7UfgHGEEtiGEF7" target="_blank">242 Phạm Cự Lượng, Sơn Trà, TP. Đà Nẵng</a></li>
+                <li><a href="https://maps.app.goo.gl/Uiy6VoNimHvfooD78" target="_blank">78e Nguyễn Chí Thanh, Hải Châu, Đà Nẵng</a></li>
+                <li><a href="https://maps.app.goo.gl/eeifmep17vDhEsmQ7" target="_blank">34 Phan Đăng Lưu, Hải Châu, Đà Nẵng</a></li>
             </ul>
             <div id="map"></div>
         </div>
